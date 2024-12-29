@@ -4,7 +4,7 @@
             :showIndicators="false" class="">
             <template #item="slotProps">
                 <div
-                    class="border border-gray-300 dark:border-zinc-700 dark:border-surface-700 rounded m-2 p-4 bg-gray-100 dark:bg-zinc-800">
+                    class="border border-gray-300 dark:border-zinc-700 dark:border-surface-700 rounded m-2 p-4 bg-gray-100 dark:bg-zinc-800 shadow-md dark:shadow-none">
                     <NuxtLink to="/">
                         <img :src="slotProps.data.poster" :alt="slotProps.data.name">
                         <div class="pt-2 text-sm" style="direction: rtl;">{{ slotProps.data.descr }}</div>

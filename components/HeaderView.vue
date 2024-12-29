@@ -1,6 +1,7 @@
 <template>
     <div class="header">
-        <div class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">
+        <div
+            class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">
             <span>
                 <img class="h-[66px]" src="/logo.png" alt="logo">
             </span>
@@ -37,9 +38,11 @@
         <ul
             class="nav-menu fixed top-[82px] right-0 w-full h-[60px] bg-blue-900 dark:bg-zinc-800 text-white flex gap-x-5 max-sm:gap-x-3 justify-start items-center pr-16 max-sm:pr-3 max-sm:text-xs overflow-x-auto z-50">
             <li class="cursor-pointer" v-for="item in navMenu" :key="item.id">
-                <span>
-                    {{ item.title }}
-                </span>
+                <NuxtLink :to="item?.path">
+                    <span>
+                        {{ item.title }}
+                    </span>
+                </NuxtLink>
             </li>
         </ul>
     </div>

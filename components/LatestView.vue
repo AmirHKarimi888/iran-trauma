@@ -5,7 +5,7 @@
       {{ title }}
     </div>
     <ul class="grid max-sm:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-      <li v-for="item in posts" :key="item?.id" class="border border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-zinc-800 p-2">
+      <li v-for="item in posts" :key="item?.id" class="border border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-zinc-800 shadow-md dark:shadow-none p-2">
         <div>
           <img :src="item?.poster" />
         </div>
@@ -18,7 +18,7 @@
         <div class="mt-5 mb-3">
           <NuxtLink to="/">
             <span
-              class="text-xs p-2 border-[1px] w-[25%] text-white border-blue-800 bg-blue-900 hover:bg-blue-600 dark:border-gray-500 dark:bg-zinc-900 duration-100 dark:hover:bg-white dark:hover:text-black">
+              class="text-xs p-2 border-[1px] w-[25%] text-white border-blue-800 bg-blue-900 hover:bg-blue-600 dark:border-gray-700 dark:bg-zinc-900 duration-100 dark:hover:bg-white dark:hover:text-black">
               مطالعه بیشتر
             </span>
           </NuxtLink>

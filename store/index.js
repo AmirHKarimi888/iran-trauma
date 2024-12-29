@@ -3,10 +3,10 @@ import { defineStore } from "pinia";
 export const useStore = defineStore("store", () => {
 
     const navMenu = ref([
-        { id: 1, title: "صفحه نخست" },
-        { id: 3, title: "مقالات" },
-        { id: 2, title: "اخبار" },
-        { id: 6, title: "تماس با ما" }
+        { id: 1, title: "صفحه نخست", path: "/" },
+        { id: 3, title: "مقالات", path: "/articles" },
+        { id: 2, title: "اخبار", path: "/news" },
+        { id: 4, title: "تماس با ما", path: "/contact" }
     ])
 
     const articles = ref([
