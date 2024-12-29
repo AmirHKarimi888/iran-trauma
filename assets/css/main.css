@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: IRAN;
+    font-style: normal;
+    src: url("/assets/fonts/IRAN.woff");
+}
+
+* {
+    font-family: IRAN;
+}
+
+body {
+    @apply bg-white dark:bg-zinc-700;
+}
