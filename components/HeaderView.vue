@@ -3,14 +3,14 @@
     <div class="header">
         <div
             class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">
-            <span>
+            <div>
                 <NuxtLink to="/">
-                    <!-- <img class="h-[66px]" src="/logo.png" alt="logo"> -->
-                    <div class="font-bold text-lg text-blue-700 dark:text-white">آسیب‌ یار</div>
-                    <div class="text-xs text-yellow-700 dark:text-zinc-400">مرجع اطلاع رسانی، آموزش، پیشگیری و ایمنی در
-                        مقابل تروما</div>
+                    <img class="w-[60px]" src="/logo.png" alt="logo">
+                    <!-- <div class="font-bold text-sm text-blue-700 dark:text-white">آسیب‌ یار</div> -->
+                    <!-- <div class="text-xs max-sm:text-[0.8rem] text-yellow-700 dark:text-zinc-400">مرجع اطلاع رسانی، آموزش، پیشگیری و ایمنی در
+                        مقابل تروما</div> -->
                 </NuxtLink>
-            </span>
+            </div>
 
             <ul class="flex justify-center gap-x-5 text-zinc-700 dark:text-gray-300">
                 <li class="cursor-pointer" @click="toggleTheme">
@@ -45,9 +45,9 @@
 
         <div class="navmenu fixed top-[82px] right-0 w-full h-[56px] bg-blue-900 dark:bg-zinc-800 text-white z-50">
             <ul class="w-full h-full flex gap-x-5 max-sm:gap-x-3 justify-start items-center pr-16 max-sm:hidden">
-                <li @mouseenter="toggleSubLinks(item?.id)" @mouseleave="toggleSubLinks(item?.id)"
-                    @touchstart="toggleSubLinks(item?.id)" id="SubLinkOpener"
-                    class="cursor-pointer h-full flex items-center" v-for="item in navMenu" :key="item?.id">
+                <li class="cursor-pointer h-full flex items-center" v-for="item in navMenu" :key="item?.id"
+                    @mouseenter="toggleSubLinks(item?.id)" @mouseleave="toggleSubLinks(item?.id)"
+                    @touchstart="toggleSubLinks(item?.id)" id="SubLinkOpener">
                     <NuxtLink :to="item?.path" class="hover:text-yellow-400">
                         <span>
                             {{ item?.title }}
@@ -57,12 +57,26 @@
                         class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-50 fixed top-[138px] p-3">
                         <ul class="grid">
                             <li class="w-full h-full py-2 grid items-center" v-for="sub in item?.sublinks"
-                                :key="sub?.id">
+                                :key="sub?.id" @mouseenter="toggleSubSubLinks(sub?.id)"
+                                @mouseleave="toggleSubSubLinks(sub?.id)" @touchstart="toggleSubSubLinks(sub?.id)">
                                 <NuxtLink :to="sub?.path" class="hover:text-yellow-400">
                                     <span>
                                         {{ sub?.title }}
                                     </span>
                                 </NuxtLink>
+                                <div v-if="sub?.sublinks.length !== 0" :id="`SubSubLink${sub?.id}`"
+                                    class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-40 fixed top-[180px] right-[275px] p-3">
+                                    <ul class="grid">
+                                        <li class="w-full h-full py-2 grid items-center" v-for="subsub in sub?.sublinks"
+                                            :key="subsub?.id">
+                                            <NuxtLink :to="subsub?.path" class="hover:text-yellow-400">
+                                                <span>
+                                                    {{ subsub?.title }}
+                                                </span>
+                                            </NuxtLink>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -82,9 +96,9 @@
                     <Drawer style="direction: rtl;" v-model:visible="drawerVisible" header="منوی وبسایت"
                         position="right" class="w-[240px] text-sm">
                         <ul class="mt-5 w-full flex flex-col gap-y-5 justify-start items-center pr-2">
-                            <li @click="toggleSubLinks(item?.id)" id="SubLinkOpener"
+                            <li id="SubLinkOpener"
                                 class="cursor-pointer w-full grid items-center" v-for="item in navMenu" :key="item?.id">
-                                <NuxtLink :to="item?.path" class="hover:text-yellow-400 flex gap-1">
+                                <NuxtLink :to="item?.path" class="hover:text-yellow-400 flex gap-1" @click="toggleSubLinks(item?.id)">
                                     <span>
                                         {{ item?.title }}
                                     </span>
@@ -99,13 +113,33 @@
                                 <div v-if="item?.sublinks.length !== 0" :id="`SubLink${item?.id}${item?.id}${item?.id}`"
                                     class="hidden mt-1">
                                     <ul class="cursor-pointer w-full grid items-center gap-1">
-                                        <li class="cursor-pointer w-full flex items-center"
+                                        <li class="cursor-pointer w-full grid items-center"
                                             v-for="sub in item?.sublinks" :key="sub?.id">
-                                            <NuxtLink :to="sub?.path" class="hover:text-yellow-400">
+                                            <NuxtLink :to="sub?.path" class="hover:text-yellow-400 flex gap-2" @click="toggleSubSubLinks(sub?.id)">
                                                 <span>
                                                     {{ sub?.title }}
                                                 </span>
+                                                <span v-if="sub?.sublinks.length !== 0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill="currentColor"
+                                                            d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6z" />
+                                                    </svg>
+                                                </span>
                                             </NuxtLink>
+                                            <div v-if="sub?.sublinks.length !== 0" :id="`SubSubLink${sub?.id}${sub?.id}${sub?.id}`"
+                                                class="hidden mb-3">
+                                                <ul class="cursor-pointer w-full grid items-center gap-1">
+                                                    <li class="cursor-pointer w-full flex items-center"
+                                                        v-for="subsub in sub?.sublinks" :key="subsub?.id">
+                                                        <NuxtLink :to="subsub?.path" class="hover:text-yellow-400">
+                                                            <span>
+                                                                {{ subsub?.title }}
+                                                            </span>
+                                                        </NuxtLink>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -129,6 +163,7 @@ const store = useStore();
 const { navMenu } = storeToRefs(store);
 
 const selectedSubLinkId = ref("");
+const selectedSubSubLinkId = ref("");
 
 const drawerVisible = ref(false);
 
@@ -169,6 +204,19 @@ const toggleSubLinks = (id) => {
         document.querySelector(`#SubLink${id}`)?.classList.remove("hidden");
         document.querySelector(`#SubLink${id}${id}${id}`)?.classList.remove("hidden");
         selectedSubLinkId.value = id;
+    }
+}
+
+const toggleSubSubLinks = (id) => {
+
+    if (selectedSubSubLinkId.value) {
+        document.querySelector(`#SubSubLink${id}`)?.classList.add("hidden");
+        document.querySelector(`#SubSubLink${id}${id}${id}`)?.classList.add("hidden");
+        selectedSubSubLinkId.value = "";
+    } else {
+        document.querySelector(`#SubSubLink${id}`)?.classList.remove("hidden");
+        document.querySelector(`#SubSubLink${id}${id}${id}`)?.classList.remove("hidden");
+        selectedSubSubLinkId.value = id;
     }
 }
 

@@ -5,12 +5,21 @@ export const useStore = defineStore("store", () => {
     const navMenu = ref([
         { id: 1, title: "صفحه نخست", path: "/", sublinks: [] },
         { id: 2, title: "آموزش", path: "#", sublinks: [
-            { id: 1, title: "مقالات آموزشی", path: "/مقالات آموزشی" },
-            { id: 2, title: "چندرسانه‌ای", path: "/چند رسانه‌ای", sublinks: [] },
+            { id: 1, title: "مقالات آموزشی", path: "#", sublinks: [
+                { id: 1, title: "ایمنی رانندگان و مسافران", path: "/ایمنی رانندگان و مسافران" },
+                { id: 2, title: "ایمنی جاده", path: "/ایمنی جاده" },
+                { id: 3, title: "ایمنی وسایل نقلیه", path: "/ایمنی وسایل نقلیه" },
+                { id: 4, title: "ایمنی در ورزش", path: "/ایمنی در ورزش" },
+                { id: 5, title: "ایمنی در محیط کار و خانه", path: "/ایمنی در محیط کار و خانه" },
+            ] },
+            { id: 2, title: "چندرسانه‌ای", path: "#", sublinks: [
+                { id: 1, title: "فیلم", path: "/فیلم" },
+                { id: 2, title: "پمفلت", path: "/پمفلت" }
+            ] },
         ]},
         { id: 3, title: "تازه‌ها", path: "#", sublinks: [
-            { id: 1, title: "حوادث", path: "/حوادث" },
-            { id: 2, title: "هوش مصنوعی در تروما و ایمنی", path: "/هوش مصنوعی در تروما و ایمنی" },
+            { id: 1, title: "حوادث", path: "/حوادث", sublinks: [] },
+            { id: 2, title: "هوش مصنوعی در تروما و ایمنی", path: "/هوش مصنوعی در تروما و ایمنی", sublinks: [] },
         ]},
         { id: 4, title: "روز جهانی تروما", path: "/روز جهانی تروما", sublinks: [] },
         { id: 5, title: "درباره ما", path: "/درباره ما", sublinks: [] },
