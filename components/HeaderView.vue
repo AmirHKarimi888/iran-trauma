@@ -4,7 +4,12 @@
         <div
             class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">
             <span>
-                <!-- <img class="h-[66px]" src="/logo.png" alt="logo"> -->
+                <NuxtLink to="/">
+                    <!-- <img class="h-[66px]" src="/logo.png" alt="logo"> -->
+                    <div class="font-bold text-lg text-blue-700 dark:text-white">آسیب‌ یار</div>
+                    <div class="text-xs text-yellow-700 dark:text-zinc-400">مرجع اطلاع رسانی، آموزش، پیشگیری و ایمنی در
+                        مقابل تروما</div>
+                </NuxtLink>
             </span>
 
             <ul class="flex justify-center gap-x-5 text-zinc-700 dark:text-gray-300">
