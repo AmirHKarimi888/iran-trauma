@@ -3,7 +3,7 @@
         <div
             class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">
             <span>
-                <img class="h-[66px]" src="/logo.png" alt="logo">
+                <!-- <img class="h-[66px]" src="/logo.png" alt="logo"> -->
             </span>
 
             <ul class="flex justify-center gap-x-5 text-zinc-700 dark:text-gray-300">
@@ -27,24 +27,82 @@
                 </li>
 
                 <li class="cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8z" />
-                    </svg>
+                    <NuxtLink to="/عضویت">
+                        <span
+                            class="bg-blue-800 dark:bg-zinc-900 text-white dark:hover:text-black p-3 text-sm rounded-md border border-blue-900 dark:border-zinc-900 hover:bg-blue-600 dark:hover:bg-white duration-100">
+                            عضویت
+                        </span>
+                    </NuxtLink>
                 </li>
             </ul>
         </div>
 
-        <ul
-            class="nav-menu fixed top-[82px] right-0 w-full h-[60px] bg-blue-900 dark:bg-zinc-800 text-white flex gap-x-5 max-sm:gap-x-3 justify-start items-center pr-16 max-sm:pr-3 max-sm:text-xs overflow-x-auto z-50">
-            <li class="cursor-pointer" v-for="item in navMenu" :key="item.id">
-                <NuxtLink :to="item?.path">
-                    <span>
-                        {{ item.title }}
+        <div class="navmenu fixed top-[82px] right-0 w-full h-[56px] bg-blue-900 dark:bg-zinc-800 text-white  z-50">
+            <ul class="w-full h-full flex gap-x-5 max-sm:gap-x-3 justify-start items-center pr-16 max-sm:hidden">
+                <li @mouseenter="openSubLinks(item?.id)" @mouseleave="closeSubLinks(item?.id)"
+                    @touchstart="openSubLinks(item?.id)" id="SubLinkOpener"
+                    class="cursor-pointer h-full flex items-center" v-for="item in navMenu" :key="item?.id">
+                    <NuxtLink :to="item?.path" class="hover:text-yellow-400">
+                        <span>
+                            {{ item?.title }}
+                        </span>
+                    </NuxtLink>
+                    <div v-if="item?.sublinks.length !== 0" :id="`SubLink${item?.id}`"
+                        class="hidden bg-blue-800 z-50 fixed top-[138px] p-3">
+                        <ul class="grid">
+                            <li class="w-full h-full py-2 grid items-center" v-for="sub in item?.sublinks"
+                                :key="sub?.id">
+                                <NuxtLink :to="sub?.path" class="hover:text-yellow-400">
+                                    <span>
+                                        {{ sub?.title }}
+                                    </span>
+                                </NuxtLink>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <div>
+                <div class="sm:hidden w-[50px] h-full grid justify-center items-center">
+                    <span class="cursor-pointer" @click="drawerVisible = true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z" />
+                        </svg>
                     </span>
-                </NuxtLink>
-            </li>
-        </ul>
+                </div>
+
+                <div>
+                    <Drawer style="direction: rtl;" v-model:visible="drawerVisible" header="منوی وبسایت" position="right" class="w-[240px]">
+                        <ul
+                            class="mt-5 w-full flex flex-col gap-y-4 justify-start items-center pr-2">
+                            <li @click="openSubLinks(item?.id)" id="SubLinkOpener"
+                                class="cursor-pointer w-full flex items-center" v-for="item in navMenu" :key="item?.id">
+                                <NuxtLink :to="item?.path" class="hover:text-yellow-400">
+                                    <span>
+                                        {{ item?.title }}
+                                    </span>
+                                </NuxtLink>
+                                <div v-if="item?.sublinks.length !== 0" :id="`SubLink${item?.id}`"
+                                    class="hidden bg-blue-800 z-50 fixed top-[138px] p-3">
+                                    <ul class="grid">
+                                        <li class="w-full h-full py-2 grid items-center" v-for="sub in item?.sublinks"
+                                            :key="sub?.id">
+                                            <NuxtLink :to="sub?.path" class="hover:text-yellow-400">
+                                                <span>
+                                                    {{ sub?.title }}
+                                                </span>
+                                            </NuxtLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </Drawer>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -57,6 +115,10 @@ const isDark = ref(false);
 const store = useStore();
 const { navMenu } = storeToRefs(store);
 
+const selectedSubLinkId = ref("");
+
+const drawerVisible = ref(false);
+
 onMounted(() => {
     if ("theme" in localStorage && localStorage.getItem("theme") === "dark") {
         document.documentElement.classList.add("dark");
@@ -65,6 +127,10 @@ onMounted(() => {
         localStorage.setItem("theme", "light");
         document.documentElement.classList.remove("dark");
     }
+
+    document.querySelector("main").addEventListener("touchstart", () => {
+        closeSubLinks(selectedSubLinkId.value);
+    })
 })
 
 const toggleTheme = () => {
@@ -79,6 +145,17 @@ const toggleTheme = () => {
         isDark.value = true;
     }
 }
+
+const openSubLinks = (id) => {
+    document.querySelector(`#SubLink${id}`)?.classList.remove("hidden");
+    selectedSubLinkId.value = id;
+}
+const closeSubLinks = (id) => {
+    document.querySelector(`#SubLink${id}`)?.classList.add("hidden");
+    selectedSubLinkId.value = "";
+}
+
+
 </script>
 
 <style></style>

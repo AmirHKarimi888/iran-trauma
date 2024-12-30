@@ -13,9 +13,9 @@ const store = useStore();
 const { articles } = storeToRefs(store);
 
 useHead({
-  title: "انجمن ترومای ایران",
+  title: "آسیب یار",
   meta: [
-    { name: "انجمن ترومای ایران", content: "" },
+    { name: "آسیب یار", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
     { name: "Iranian Trauma Society", content: "" }
   ],
   link: [
