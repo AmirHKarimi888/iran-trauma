@@ -21,7 +21,7 @@ export const useStore = defineStore("store", () => {
             { id: 1, title: "حوادث", path: "/حوادث", sublinks: [] },
             { id: 2, title: "هوش مصنوعی در تروما و ایمنی", path: "/هوش مصنوعی در تروما و ایمنی", sublinks: [] },
         ]},
-        { id: 4, title: "روز جهانی تروما", path: "/روز جهانی تروما", sublinks: [] },
+        { id: 4, title: "روز جهانی تروما", path: "/trauma-international-day", sublinks: [] },
         { id: 5, title: "درباره ما", path: "/درباره ما", sublinks: [] },
         { id: 6, title: "تماس با ما", path: "/تماس با ما", sublinks: [] }
     ])

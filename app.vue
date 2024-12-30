@@ -3,7 +3,7 @@
     <header style="direction: rtl;">
       <HeaderView />
     </header>
-    <main>
+    <main class="w-full min-h-screen">
       <NuxtPage />
     </main>
     <footer style="direction: rtl;">
