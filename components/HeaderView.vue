@@ -1,4 +1,4 @@
-/* eslint-disable padded-blocks */
+/* eslint-disable */
 <template>
     <div class="header">
         <div
@@ -57,9 +57,9 @@
                         </span>
                     </NuxtLink>
                     <div v-if="item?.sublinks.length !== 0" :id="`SubLink${item?.id}`"
-                        class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-50 fixed top-[138px] p-3">
+                        class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-50 fixed top-[138px]">
                         <ul class="grid">
-                            <li class="w-full h-full py-2 grid items-center" v-for="sub in item?.sublinks"
+                            <li class="w-full h-full p-2 grid items-center" v-for="sub in item?.sublinks"
                                 :key="sub?.id" @mouseenter="toggleSubSubLinks(sub?.id)"
                                 @mouseleave="toggleSubSubLinks(sub?.id)" @touchstart="toggleSubSubLinks(sub?.id)">
                                 <NuxtLink :to="sub?.path" class="hover:text-yellow-400">
@@ -68,9 +68,9 @@
                                     </span>
                                 </NuxtLink>
                                 <div v-if="sub?.sublinks.length !== 0" :id="`SubSubLink${sub?.id}`"
-                                    class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-40 fixed top-[180px] right-[275px] p-3">
+                                    class="hidden bg-blue-800 dark:bg-zinc-800 dark:border-t dark:border-zinc-700 z-40 fixed top-[165px] right-[275px]">
                                     <ul class="grid">
-                                        <li class="w-full h-full py-2 grid items-center" v-for="subsub in sub?.sublinks"
+                                        <li class="w-full h-full p-2 grid items-center" v-for="subsub in sub?.sublinks"
                                             :key="subsub?.id">
                                             <NuxtLink :to="subsub?.path" class="hover:text-yellow-400">
                                                 <span>
@@ -165,6 +165,7 @@ import { useStore } from '~/store';
 const isDark = ref(false);
 
 const store = useStore();
+const { getNavMenu } = store;
 const { navMenu } = storeToRefs(store);
 
 const selectedSubLinkId = ref("");
@@ -184,6 +185,8 @@ onMounted(() => {
     document.querySelector("main").addEventListener("touchstart", () => {
         toggleSubLinks(selectedSubLinkId.value);
     })
+
+    getNavMenu();
 })
 
 const toggleTheme = () => {

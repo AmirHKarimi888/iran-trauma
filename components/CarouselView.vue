@@ -32,6 +32,10 @@ import { Carousel } from "primevue";
 import { useStore } from "~/store";
 
 const store = useStore();
+const { getCarousel } = store;
 const { carousel } = storeToRefs(store);
 
+onMounted(() => {
+    getCarousel();
+})
 </script>

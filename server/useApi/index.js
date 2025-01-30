@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default function () {
-    const get = async (baseUrl, endpoint) => {
-        return await axios.get(baseUrl + endpoint)
+    const get = async (baseUrl) => {
+        return await axios.get(baseUrl)
     }
 
     const post = async (baseUrl, data) => {

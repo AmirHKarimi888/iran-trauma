@@ -2,7 +2,7 @@
   <div>
     <div class="w-full min-h-screen">
     <div
-      class="mx-auto mt-[200px] w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-2 text-sm leading-6"
+      class="mx-auto mt-[200px] w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6"
       style="direction: rtl;">
       <div class="text-lg" style="direction: rtl;">
        {{ selectedArticle?.title }}
