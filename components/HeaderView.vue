@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable padded-blocks */
 <template>
     <div class="header">
         <div
@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="cursor-pointer">
-                    <NuxtLink to="/عضویت">
+                    <NuxtLink to="/register">
                         <span
                             class="bg-blue-800 dark:bg-zinc-900 text-white dark:hover:text-black p-3 text-sm rounded-md border border-blue-900 dark:border-zinc-900 hover:bg-blue-600 dark:hover:bg-white duration-100">
                             عضویت
