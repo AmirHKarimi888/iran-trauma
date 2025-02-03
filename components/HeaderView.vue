@@ -1,5 +1,5 @@
-/* eslint-disable */
 <template>
+    <!-- eslint-disable -->
     <div class="header">
         <div
             class="navbar fixed top-0 right-0 w-full h-[81px] bg-gray-300/60 dark:bg-zinc-800/90 flex justify-between items-center px-10 max-sm:px-2 z-50">

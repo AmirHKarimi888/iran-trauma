@@ -15,7 +15,7 @@
 <script setup>
 const props = defineProps({
   posts: Object,
-  title: Text
+  title: String
 })
 </script>
 

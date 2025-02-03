@@ -6,12 +6,12 @@ export default [
     },
     {
         id: 2,
-        descr: "pages and navmenu-items",
+        descr: "carousel and navmenu-items",
         url: "https://679b698e33d316846323c401.mockapi.io/asibyar/"
     },
     {
         id: 3,
-        descr: "carousel",
+        descr: "indexPage and pages",
         url: "https://679bc94633d316846325204a.mockapi.io/asibyar/"
     }
 ]

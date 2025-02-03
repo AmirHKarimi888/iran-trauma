@@ -1,7 +1,11 @@
 <template>
-  <div class="home w-full">
+    <div class="home w-full">
     <CarouselView />
-    <LatestView :posts="articles" title="آخرین مقالات" />
+    
+    <div>
+      <Posts v-if="latestArticles.length > 0" :posts="latestArticles" :title="'آخرین مقالات'" />
+      <LoaderView v-else />
+    </div>
 
     <div class="flex max-sm:flex-col gap-3 lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] mx-auto mt-10">
       <div class="w-[60%] max-sm:w-full border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6" style="direction: rtl;">
@@ -31,7 +35,12 @@ import { storeToRefs } from 'pinia';
 import { useStore } from '~/store';
 
 const store = useStore();
-const { articles } = storeToRefs(store);
+const { getLatestArticles } = store;
+const { latestArticles } = storeToRefs(store);
+
+onMounted(() => {
+  getLatestArticles();
+})
 
 useHead({
   title: "آسیب یار",
