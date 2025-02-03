@@ -1,7 +1,7 @@
 export default [
     {
         id: 1,
-        descr: "users and posts",
+        descr: "posts and comments",
         url: "https://679b67b433d316846323be33.mockapi.io/asibyar/"
     },
     {

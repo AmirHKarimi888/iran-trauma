@@ -10,6 +10,8 @@ export const useStore = defineStore("store", () => {
 
     const latestArticles = ref([]);
 
+    const selectedPost = ref({});
+
     const { get } = useApi();
 
     const getNavMenu = async () => {
@@ -43,5 +45,17 @@ export const useStore = defineStore("store", () => {
         }
     }
 
-    return { navMenu, carousel, latestArticles, getNavMenu, getCarousel, getLatestArticles };
+    const getPost = async (id) => {
+        const baseUrl = new URL(`${baseUrls[0].url}posts`);
+        baseUrl.searchParams.append("id", id);
+        
+        try {
+            await get(baseUrl)
+            .then(response => selectedPost.value = response.data[0])
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    return { navMenu, carousel, latestArticles, selectedPost, getNavMenu, getCarousel, getLatestArticles, getPost };
 })

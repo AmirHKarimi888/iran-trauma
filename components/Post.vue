@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="mt-5 mb-3">
-            <NuxtLink :to="post?.link">
+            <NuxtLink :to="`post/${post?.id}`">
                 <span
                     class="text-xs p-2 border-[1px] w-[25%] text-white border-blue-800 bg-blue-900 hover:bg-blue-600 dark:border-zinc-800 dark:bg-zinc-900 duration-100 dark:hover:bg-white dark:hover:text-black">
                     مطالعه بیشتر
