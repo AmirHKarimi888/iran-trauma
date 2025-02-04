@@ -3,21 +3,41 @@
     <LoaderView v-if="!selectedPost?.id"
       class="loader lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto mt-[330px] p-20" />
     <div v-else class="w-full min-h-screen">
-      <div class="post-header">
-
-      </div>
-
       <div
-        class="post-body mx-auto mt-[200px] w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6"
+        class="mx-auto mt-[200px] w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6"
         style="direction: rtl;">
-        <div class="text-lg" style="direction: rtl;">
-          {{ selectedPost?.title }}
+        <div class="post-header text-xs text-zinc-700 dark:text-white flex flex-col gap-3 border-b border-zinc-300 dark:border-zinc-500 pb-3">
+          <div class="w-full grid max-sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
+            <span>ایجاد در {{ formatDate(selectedPost?.createdAt) }}</span>
+            <span>ویرایش در {{ formatDate(selectedPost?.updatedAt) }}</span>
+            <span>منتشر شده توسط {{ selectedPost?.author }}</span>
+          </div>
+          <div class="flex gap-5">
+            <span class="flex gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 16q1.875 0 3.188-1.312T16.5 11.5t-1.312-3.187T12 7T8.813 8.313T7.5 11.5t1.313 3.188T12 16m0-1.8q-1.125 0-1.912-.788T9.3 11.5t.788-1.912T12 8.8t1.913.788t.787 1.912t-.787 1.913T12 14.2m0 4.8q-3.65 0-6.65-2.037T1 11.5q1.35-3.425 4.35-5.462T12 4t6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19m0-2q2.825 0 5.188-1.487T20.8 11.5q-1.25-2.525-3.613-4.012T12 6T6.813 7.488T3.2 11.5q1.25 2.525 3.613 4.013T12 17"/></svg>
+              <span>{{ selectedPost?.views }}</span>
+            </span>
+            <span class="flex gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812T2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412t-2.625 2.963T13.45 19.7z"/></svg>
+              <span>{{ selectedPost?.likes.length }}</span>
+            </span>
+            <span class="flex gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M6 14h12v-2H6zm0-3h12V9H6zm0-3h12V6H6zM2 18V2h20v20l-4-4z"/></svg>
+              <span>{{ selectedPost?.comments?.length }}</span>
+            </span>
+          </div>
         </div>
-        <div class="my-5">
-          <NuxtImg :src="selectedPost?.poster" alt="poster" loading="lazy" />
-        </div>
-        <div>
-          {{ selectedPost?.text }}
+
+        <div class="post-body mt-3">
+          <div class="text-lg" style="direction: rtl;">
+            {{ selectedPost?.title }}
+          </div>
+          <div class="my-5">
+            <NuxtImg :src="selectedPost?.poster" alt="poster" loading="lazy" class="w-full" />
+          </div>
+          <div>
+            {{ selectedPost?.text }}
+          </div>
         </div>
       </div>
     </div>
@@ -34,13 +54,10 @@ const store = useStore();
 const { getPost } = store;
 const { selectedPost } = storeToRefs(store);
 
+const formatDate = useFormatDate();
+
 onMounted(() => {
   getPost(route.params?.id)
-    .then(() => {
-      const formatDate = useFormatDate();
-
-      console.log(formatDate(selectedPost.value?.createdAt));
-    })
 })
 </script>
 
