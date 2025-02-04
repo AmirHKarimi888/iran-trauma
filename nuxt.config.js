@@ -15,7 +15,8 @@ export default defineNuxtConfig({
   modules: [
     "@primevue/nuxt-module",
     "@pinia/nuxt",
-    "@vee-validate/nuxt"
+    "@vee-validate/nuxt",
+    "@nuxt/image"
   ],
 
   primevue: {

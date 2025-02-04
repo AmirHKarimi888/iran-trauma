@@ -1,10 +1,13 @@
 <template>
     <div class="home w-full">
-    <CarouselView />
+    <div>
+      <CarouselView v-if="carousel.length > 0" :carousel="carousel" :title="''" />
+      <LoaderView v-else class="latest lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto mt-[170px] p-20" />
+    </div>
     
     <div>
       <Posts v-if="latestArticles.length > 0" :posts="latestArticles" :title="'آخرین مقالات'" />
-      <LoaderView v-else />
+      <LoaderView v-else class="latest lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto mt-[170px] p-20" />
     </div>
 
     <div class="flex max-sm:flex-col gap-3 lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] mx-auto mt-10">
@@ -35,10 +38,11 @@ import { storeToRefs } from 'pinia';
 import { useStore } from '~/store';
 
 const store = useStore();
-const { getLatestArticles } = store;
-const { latestArticles } = storeToRefs(store);
+const { getCarousel, getLatestArticles } = store;
+const { latestArticles, carousel } = storeToRefs(store);
 
 onMounted(() => {
+  getCarousel();
   getLatestArticles();
 })
 

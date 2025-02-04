@@ -5,8 +5,7 @@
             <template #item="slotProps">
                 <div class="border border-gray-300 dark:border-zinc-700 dark:border-surface-700 rounded m-2 p-4 bg-gray-100 dark:bg-zinc-800 shadow-md dark:shadow-none"
                     style="direction: rtl;">
-                    <img class="w-full h-[400px] max-sm:h-[200px]" v-if="slotProps.data?.id === 1" src="../assets/images/ar1.jpg" alt="poster">
-                    <img class="w-full h-[400px] max-sm:h-[200px]" v-if="slotProps.data?.id === 2" src="../assets/images/ar2.jpg" alt="poster">
+                    <NuxtImg class="w-full h-[400px] max-sm:h-[200px]" :src="slotProps.data?.poster" alt="poster" loading="lazy" />
                     <div class="mt-2">
                         <div class="text-lg font-bold">{{ slotProps.data?.title }}</div>
                         <div class="text-sm">
@@ -29,13 +28,9 @@
 
 <script setup>
 import { Carousel } from "primevue";
-import { useStore } from "~/store";
 
-const store = useStore();
-const { getCarousel } = store;
-const { carousel } = storeToRefs(store);
-
-onMounted(() => {
-    getCarousel();
+const props = defineProps({
+    carousel: Object,
+    title: String
 })
 </script>

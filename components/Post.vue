@@ -1,8 +1,7 @@
 <template>
     <div>
         <div>
-            <img class="w-full h-[200px]" v-if="post?.id === 1" src="../assets/images/ar1.jpg" alt="poster">
-            <img class="w-full h-[200px]" v-if="post?.id === 2" src="../assets/images/ar2.jpg" alt="poster">
+            <NuxtImg class="w-full h-[200px]" :src="post?.poster" alt="poster" loading="lazy" />
         </div>
         <div class="mt-2">
             <div class="text-lg font-bold">{{ post?.title }}</div>
