@@ -75,13 +75,7 @@ export const useStore = defineStore("store", () => {
     const likePost = async () => {
         const baseUrl = new URL(`${baseUrls[0].url}posts/${selectedPost.value?.id}`);
 
-        let tempID = Math.round(Math.random() * 100000000000);
-
-        if ("tempID" in localStorage) {
-            tempID = localStorage.getItem("tempID");
-        } else {
-            localStorage.setItem("tempID", tempID);
-        }
+        let tempID = localStorage.getItem("tempID");
 
         let likes = selectedPost.value?.likes;
 

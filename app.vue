@@ -13,4 +13,13 @@
 </template>
 
 <script setup>
+onMounted(() => {
+  let tempID = Math.round(Math.random() * 100000000000);
+  
+  if ("tempID" in localStorage) {
+    null;
+  } else {
+    localStorage.setItem("tempID", tempID);
+  }
+})
 </script>
