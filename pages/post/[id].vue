@@ -64,7 +64,7 @@ const formatDate = useFormatDate();
 
 onMounted(() => {
   getPost(route.params?.id)
-  //.then(async () => await viewPost());
+  .then(async () => await viewPost());
 })
 </script>
 
