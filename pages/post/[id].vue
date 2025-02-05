@@ -39,6 +39,12 @@
             {{ selectedPost?.text }}
           </div>
         </div>
+
+        <div class="post-footer">
+          <span>
+            <LikePost />
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -51,13 +57,14 @@ import useFormatDate from "../../composables/useFormatDate";
 const route = useRoute();
 
 const store = useStore();
-const { getPost } = store;
+const { getPost, viewPost } = store;
 const { selectedPost } = storeToRefs(store);
 
 const formatDate = useFormatDate();
 
 onMounted(() => {
   getPost(route.params?.id)
+  //.then(async () => await viewPost());
 })
 </script>
 

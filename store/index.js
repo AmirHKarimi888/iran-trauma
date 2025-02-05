@@ -12,8 +12,9 @@ export const useStore = defineStore("store", () => {
 
     const selectedPost = ref({});
 
-    const { get } = useApi();
+    const { get, put } = useApi();
 
+    //Get Fetches
     const getNavMenu = async () => {
         try {
             await get(`${baseUrls[1].url}navmenu`)
@@ -57,5 +58,55 @@ export const useStore = defineStore("store", () => {
         }
     }
 
-    return { navMenu, carousel, latestArticles, selectedPost, getNavMenu, getCarousel, getLatestArticles, getPost };
+    //Put Fetches
+    const viewPost = async () => {
+        const baseUrl = new URL(`${baseUrls[0].url}posts/${selectedPost.value?.id}`);
+
+        try {
+            await put(baseUrl, {
+                views: +selectedPost.value?.views + 1
+            })
+            .then(() => selectedPost.value = { ...selectedPost.value, views: +selectedPost.value?.views + 1 });
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    const likePost = async () => {
+        const baseUrl = new URL(`${baseUrls[0].url}posts/${selectedPost.value?.id}`);
+
+        let tempID = Math.round(Math.random() * 100000000000);
+
+        if ("tempID" in localStorage) {
+            tempID = localStorage.getItem("tempID");
+        } else {
+            localStorage.setItem("tempID", tempID);
+        }
+
+        let likes = selectedPost.value?.likes;
+
+        if (likes.includes(tempID)) {
+            likes = likes.filter((ID) => {
+                if (+ID !== +tempID) {
+                    return ID;
+                }
+            })
+
+        } else {
+            likes = [ ...likes, tempID ];
+        }
+
+        selectedPost.value = { ...selectedPost.value, likes: likes }
+
+        try {
+            await put(baseUrl, {
+                likes: likes
+            })
+            //.then(() => selectedPost.value = { ...selectedPost.value, likes: likes });
+
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+    return { navMenu, carousel, latestArticles, selectedPost, getNavMenu, getCarousel, getLatestArticles, getPost, viewPost, likePost };
 })
