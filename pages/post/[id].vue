@@ -32,7 +32,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M6 14h12v-2H6zm0-3h12V9H6zm0-3h12V6H6zM2 18V2h20v20l-4-4z" />
               </svg>
-              <span>{{ selectedPost?.comments?.length }}</span>
+              <span>{{ postComments.length }}</span>
             </span>
           </div>
         </div>
@@ -81,7 +81,7 @@ const route = useRoute();
 
 const store = useStore();
 const { getPost, viewPost } = store;
-const { selectedPost } = storeToRefs(store);
+const { selectedPost, postComments } = storeToRefs(store);
 
 const formatDate = useFormatDate();
 

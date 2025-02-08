@@ -6,7 +6,7 @@
 
         <ul>
             <li v-for="comment in postComments" :key="comment?.id" class="border-b last:border-0 border-zinc-300 dark:border-zinc-600">
-                <CommentView :comment="comment" @deleteComment="deleteComment" />
+                <CommentView :comment="comment" @deleteComment="deleteComment" @selectComment="selectComment" />
             </li>
         </ul>
     </div>
@@ -20,12 +20,21 @@ const props = defineProps({
 })
 
 const store = useStore();
-const { postComments } = storeToRefs(store);
+const { postComments, selectedComment } = storeToRefs(store);
 const { getPostComments, deleteComment } = store;
 
 onMounted(() => {
+    postComments.value = [];
     getPostComments(props.id);
 })
+
+const selectComment = (comment) => {
+    if (selectedComment.value) {
+        selectedComment.value = "";
+    } else {
+        selectedComment.value = comment;
+    }
+};
 </script>
 
 <style></style>

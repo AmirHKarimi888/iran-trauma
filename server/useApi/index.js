@@ -6,15 +6,15 @@ export default function () {
     }
 
     const post = async (baseUrl, data) => {
-        await axios.post(baseUrl, data)
+        return await axios.post(baseUrl, data)
     }
 
     const put = async (baseUrl, data) => {
-        await axios.put(baseUrl, data)
+        return await axios.put(baseUrl, data)
     }
 
     const remove = async (baseUrl) => {
-        await axios.delete(baseUrl)
+        return await axios.delete(baseUrl)
     }
 
     return { get, post, put, remove };

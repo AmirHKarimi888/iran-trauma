@@ -10,8 +10,9 @@ export const useStore = defineStore("store", () => {
 
     const latestArticles = ref([]);
 
-    const selectedPost = ref({});
+    const selectedPost = ref("");
     const postComments = ref([]);
+    const selectedComment = ref("");
 
     const { get, put, post, remove } = useApi();
 
@@ -115,6 +116,24 @@ export const useStore = defineStore("store", () => {
         }
     }
 
+    const editComment = async (postId, commentId, thisComment) => {
+        const baseUrl = `${baseUrls[0].url}posts/${postId}/comments/${commentId}`;
+
+        try {
+            await put(baseUrl, thisComment)
+            .then(() => {
+                postComments.value.filter(comment => {
+                    if (comment.id === commentId) {
+                        comment.message = thisComment.message;
+                    }
+                });
+                postComments.value = postComments.value.sort((a, b) => +b.id - +a.id);
+            })
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
 
     //POST Fetches
     const postComment = async (postId, newComment) => {
@@ -146,5 +165,5 @@ export const useStore = defineStore("store", () => {
         }
     }
 
-    return { navMenu, carousel, latestArticles, selectedPost, postComments, getNavMenu, getCarousel, getLatestArticles, getPost, getPostComments, viewPost, likePost, postComment, deleteComment };
+    return { navMenu, carousel, latestArticles, selectedPost, postComments, selectedComment, getNavMenu, getCarousel, getLatestArticles, getPost, getPostComments, viewPost, likePost, postComment, deleteComment, editComment };
 })
