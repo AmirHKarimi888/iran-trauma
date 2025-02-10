@@ -5,8 +5,8 @@
       {{ title }}
     </div>
     <ul class="grid max-sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3">
-      <li v-for="post in posts" :key="post?.id" class="border border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-zinc-800 shadow-md dark:shadow-none p-2">
-        <Post :post="post" />
+      <li v-for="post in posts" :key="post?.id" :class="post?.showPost ? 'border border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-zinc-800 shadow-md dark:shadow-none p-2' : 'hidden'">
+        <Post :post="post"  v-if="post?.showPost"/>
       </li>
     </ul>
   </div>
