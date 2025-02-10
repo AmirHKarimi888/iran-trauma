@@ -42,7 +42,8 @@ export const useStore = defineStore("store", () => {
 
         try {
             await get(baseUrl)
-                .then(response => latestArticles.value = response.data);
+                .then(response => latestArticles.value = response.data)
+                .then(() => latestArticles.value = latestArticles.value.reverse())
         } catch (e) {
             console.log(e.message);
         }

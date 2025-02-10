@@ -51,9 +51,6 @@ useHead({
   meta: [
     { name: "آسیب یار", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
     { name: "Iranian Trauma Society", content: "" }
-  ],
-  link: [
-    { rel: "icon", href: "/logo.png" }
   ]
 })
 </script>

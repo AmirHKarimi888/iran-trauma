@@ -58,6 +58,11 @@
               <ShareView />
             </span>
           </div>
+          <div class="mt-1">
+            <span v-for="tag in selectedPost?.tags" :key="tag" class="p-1 border border-blue-900 rounded-md text-blue-900 mr-1 first:mr-0 cursor-pointer hover:bg-blue-900 hover:text-white dark:bg-zinc-600 dark:text-white dark:border-zinc-500 dark:hover:bg-white dark:hover:text-zinc-800 duration-200">
+              {{ tag }}
+            </span>
+          </div>
           <div>
             <span>
               <PostCommentView />
@@ -87,8 +92,18 @@ const formatDate = useFormatDate();
 
 onMounted(() => {
   getPost(route.params?.id)
-    .then(async () => await viewPost());
+    .then(async () => await viewPost())
+    .then(() => {
+      useHead({
+        title: `${selectedPost.value?.title}`,
+        meta: [
+          { name: `${selectedPost.value?.title}`, content: `${selectedPost.value?.descr}` },
+          { name: "آسیب یار", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
+        ]
+      })
+    })
 })
+
 </script>
 
 <style></style>
