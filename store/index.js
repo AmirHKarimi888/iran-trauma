@@ -19,8 +19,8 @@ export const useStore = defineStore("store", () => {
     //GET Fetches
     const getNavMenu = async () => {
         try {
-            await get(`${baseUrls[1].url}navmenu`)
-                .then(response => navMenu.value = response.data);
+            await get(`${baseUrls[0].url}api/collections/navmenu/records`)
+                .then(response => navMenu.value = response.data?.items);
         } catch (e) {
             console.log(e.message);
         }
@@ -28,33 +28,34 @@ export const useStore = defineStore("store", () => {
 
     const getCarousel = async () => {
         try {
-            await get(`${baseUrls[1].url}carousel`)
-                .then(response => carousel.value = response.data);
+            await get(`${baseUrls[0].url}api/collections/carousel/records`)
+                .then(response => carousel.value = response.data?.items);
         } catch (e) {
             console.log(e.message);
         }
     }
 
     const getLatestArticles = async () => {
-        const baseUrl = new URL(`${baseUrls[0].url}posts`);
-        baseUrl.searchParams.append("limit", 3);
-        baseUrl.searchParams.append("category", "article");
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records`);
+        //baseUrl.searchParams.append("limit", 3);
+        //baseUrl.searchParams.append("category", "article");
+        baseUrl.searchParams.append("sort", "-created")
 
         try {
             await get(baseUrl)
-                .then(response => latestArticles.value = response.data)
-                .then(() => latestArticles.value = latestArticles.value.reverse())
+                .then(response => latestArticles.value = response.data?.items)
+                
         } catch (e) {
             console.log(e.message);
         }
     }
 
     const getPost = async (id) => {
-        const baseUrl = new URL(`${baseUrls[0].url}posts/${id}`);
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records/${id}`);
 
         try {
             await get(baseUrl)
-                .then(response => selectedPost.value = response.data)
+                .then(response => selectedPost.value = response.data?.items)
         } catch (e) {
             console.log(e.message);
         }
@@ -66,7 +67,7 @@ export const useStore = defineStore("store", () => {
         try {
             await get(baseUrl)
                 .then(response => postComments.value = response.data)
-                .then(() => postComments.value = postComments.value.sort((a, b) => +b.id - +a.id))
+                .then(() => postComments.value = postComments.value.sort((a, b) => +b.order - +a.order))
         } catch (e) {
             console.log(e.message);
         }
@@ -128,7 +129,7 @@ export const useStore = defineStore("store", () => {
                         comment.message = thisComment.message;
                     }
                 });
-                postComments.value = postComments.value.sort((a, b) => +b.id - +a.id);
+                postComments.value = postComments.value.sort((a, b) => +b.order - +a.order);
             })
         } catch (e) {
             console.log(e.message);

@@ -5,7 +5,8 @@
             <template #item="slotProps">
                 <div class="border border-gray-300 dark:border-zinc-700 dark:border-surface-700 rounded m-2 p-4 bg-gray-100 dark:bg-zinc-800 shadow-md dark:shadow-none"
                     style="direction: rtl;">
-                    <NuxtImg class="w-full h-[400px] max-sm:h-[200px]" :src="slotProps.data?.poster" alt="poster" loading="lazy" />
+                    <NuxtImg class="w-full h-[400px] max-sm:h-[200px]" :src="slotProps.data?.blobUrl" alt="poster"
+                        loading="lazy" />
                     <div class="mt-2">
                         <div class="text-lg font-bold">{{ slotProps.data?.title }}</div>
                         <div class="text-sm">
@@ -28,9 +29,21 @@
 
 <script setup>
 import { Carousel } from "primevue";
+import baseUrls from '~/server/useApi/baseUrls';
 
 const props = defineProps({
     carousel: Object,
     title: String
+})
+
+const carousel = ref([]);
+
+onBeforeMount(() => {
+    carousel.value = props.carousel;
+    carousel.value.filter(async (post) => {
+        await fetch(`${baseUrls[0].url}api/files/carousel/${post?.id}/${post?.poster}`)
+            .then(r => r.blob())
+            .then(blob => post.blobUrl = URL.createObjectURL(blob))
+    })
 })
 </script>
