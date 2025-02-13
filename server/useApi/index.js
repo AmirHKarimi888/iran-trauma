@@ -13,9 +13,13 @@ export default function () {
         return await axios.put(baseUrl, data)
     }
 
+    const patch = async (baseUrl, data) => {
+        return await axios.patch(baseUrl, data)
+    }
+
     const remove = async (baseUrl) => {
         return await axios.delete(baseUrl)
     }
 
-    return { get, post, put, remove };
+    return { get, post, put, patch, remove };
 }

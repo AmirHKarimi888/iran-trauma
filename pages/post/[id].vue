@@ -9,9 +9,9 @@
         <div
           class="post-header text-xs text-zinc-700 dark:text-white flex flex-col gap-3 border-b border-zinc-300 dark:border-zinc-500 pb-3">
           <div class="w-full grid max-sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
-            <span>ایجاد در {{ formatDate(selectedPost?.createdAt) }}</span>
-            <span>ویرایش در {{ formatDate(selectedPost?.updatedAt) }}</span>
-            <span>منتشر شده توسط {{ selectedPost?.author }}</span>
+            <span v-if="selectedPost?.showCreated">ایجاد در {{ formatDate(selectedPost?.created) }}</span>
+            <span v-if="selectedPost?.showEdited">ویرایش در {{ formatDate(selectedPost?.updated) }}</span>
+            <span v-if="selectedPost?.showAuthor">منتشر شده توسط {{ selectedPost?.author }}</span>
           </div>
           <div class="flex gap-5">
             <span class="flex gap-1">
@@ -28,7 +28,7 @@
               </svg>
               <span>{{ selectedPost?.likes.length }}</span>
             </span>
-            <span class="flex gap-1">
+            <span v-if="selectedPost?.showComments" class="flex gap-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M6 14h12v-2H6zm0-3h12V9H6zm0-3h12V6H6zM2 18V2h20v20l-4-4z" />
               </svg>
@@ -41,11 +41,11 @@
           <div class="text-lg" style="direction: rtl;">
             {{ selectedPost?.title }}
           </div>
-          <div class="my-5">
-            <NuxtImg :src="selectedPost?.poster" alt="poster" loading="lazy" class="w-full" />
+          <div v-if="selectedPost?.showPoster" class="mt-3">
+            <NuxtImg :src="selectedPost?.blobUrl" alt="poster" loading="lazy" class="w-full" />
           </div>
-          <div>
-            {{ selectedPost?.text }}
+          <div class="my-3" id="postContent">
+
           </div>
         </div>
 
@@ -58,17 +58,18 @@
               <ShareView />
             </span>
           </div>
-          <div class="mt-1">
-            <span v-for="tag in selectedPost?.tags" :key="tag" class="p-1 border border-blue-900 rounded-md text-blue-900 mr-1 first:mr-0 cursor-pointer hover:bg-blue-900 hover:text-white dark:bg-zinc-600 dark:text-white dark:border-zinc-500 dark:hover:bg-white dark:hover:text-zinc-800 duration-200">
+          <div v-if="selectedPost?.showTags" class="mt-1">
+            <span v-for="tag in selectedPost?.tags" :key="tag"
+              class="p-1 border border-blue-900 rounded-md text-blue-900 mr-1 first:mr-0 cursor-pointer hover:bg-blue-900 hover:text-white dark:bg-zinc-600 dark:text-white dark:border-zinc-500 dark:hover:bg-white dark:hover:text-zinc-800 duration-200">
               {{ tag }}
             </span>
           </div>
-          <div>
+          <div v-if="selectedPost?.showComments">
             <span>
               <PostCommentView />
             </span>
             <span>
-              <CommentsView :id="route.params?.id" />
+              <CommentsView :post="selectedPost" />
             </span>
           </div>
         </div>
@@ -81,6 +82,7 @@
 import { useStore } from '~/store';
 import useFormatDate from "../../composables/useFormatDate";
 import ShareView from '~/components/ShareView.vue';
+import baseUrls from '~/server/useApi/baseUrls';
 
 const route = useRoute();
 
@@ -90,9 +92,19 @@ const { selectedPost, postComments } = storeToRefs(store);
 
 const formatDate = useFormatDate();
 
+const getBlob = async () => {
+  return await fetch(`${baseUrls[0].url}api/files/posts/${selectedPost.value?.id}/${selectedPost.value?.poster}`)
+    .then(r => r.blob())
+    .then(blob => selectedPost.value = { ...selectedPost.value, blobUrl: URL.createObjectURL(blob) })
+}
+
 onMounted(() => {
   getPost(route.params?.id)
     .then(async () => await viewPost())
+    .then(async () => await getBlob())
+    .then(() => {
+      document.querySelector("#postContent").insertAdjacentHTML("afterbegin", selectedPost.value?.content);
+    })
     .then(() => {
       useHead({
         title: `${selectedPost.value?.title}`,

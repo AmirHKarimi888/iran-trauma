@@ -60,32 +60,16 @@ const postOrEdit = async () => {
     let newComment = "";
 
     if (!selectedComment.value) {
-        if (postComments.value.length === 0) {
-            newComment = {
-                "id": `${1}`,
-                "postId": selectedPost.value.id,
-                "uid": tempID.value,
-                "name": name.value,
-                "email": email.value,
-                "message": message.value,
-                "likes": []
-            }
 
-        } else {
-            let lastComment = postComments.value.sort((a, b) => +b.id - +a.id)[0];
-
-            newComment = {
-                "id": `${+lastComment.id + 1}`,
-                "postId": selectedPost.value.id,
-                "uid": tempID.value,
-                "name": name.value,
-                "email": email.value,
-                "message": message.value,
-                "likes": []
-            }
+        newComment = {
+            "postId": selectedPost.value.id,
+            "uid": tempID.value,
+            "name": name.value,
+            "email": email.value,
+            "message": message.value,
         }
 
-        await postComment(selectedPost.value.id, newComment)
+        await postComment(newComment)
             .then(() => {
                 name.value = "";
                 email.value = "";
@@ -93,7 +77,7 @@ const postOrEdit = async () => {
             })
 
     } else {
-        await editComment(selectedComment.value?.postId, selectedComment.value?.id, {
+        await editComment({
             ...selectedComment.value,
             message: message.value
         })

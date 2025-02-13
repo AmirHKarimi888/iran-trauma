@@ -4,6 +4,8 @@ import baseUrls from "~/server/useApi/baseUrls";
 
 export const useStore = defineStore("store", () => {
 
+    const searchBoxVisible = ref(false);
+
     const navMenu = ref([]);
 
     const carousel = ref([]);
@@ -14,9 +16,9 @@ export const useStore = defineStore("store", () => {
     const postComments = ref([]);
     const selectedComment = ref("");
 
-    const { get, put, post, remove } = useApi();
+    const { get, put, patch, post, remove } = useApi();
 
-    //GET Fetches
+    //Navmenu
     const getNavMenu = async () => {
         try {
             await get(`${baseUrls[0].url}api/collections/navmenu/records`)
@@ -26,6 +28,7 @@ export const useStore = defineStore("store", () => {
         }
     }
 
+    //Carousel
     const getCarousel = async () => {
         try {
             await get(`${baseUrls[0].url}api/collections/carousel/records`)
@@ -35,11 +38,11 @@ export const useStore = defineStore("store", () => {
         }
     }
 
+    //Posts
     const getLatestArticles = async () => {
         const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records`);
-        //baseUrl.searchParams.append("limit", 3);
-        //baseUrl.searchParams.append("category", "article");
-        baseUrl.searchParams.append("sort", "-created")
+        baseUrl.searchParams.append("sort", "-created");
+        baseUrl.searchParams.append("sort", "showPost = " + "" + true + "");
 
         try {
             await get(baseUrl)
@@ -55,30 +58,17 @@ export const useStore = defineStore("store", () => {
 
         try {
             await get(baseUrl)
-                .then(response => selectedPost.value = response.data?.items)
+                .then(response => selectedPost.value = response.data)
         } catch (e) {
             console.log(e.message);
         }
     }
 
-    const getPostComments = async (postId) => {
-        const baseUrl = `${baseUrls[0].url}posts/${postId}/comments`;
-
-        try {
-            await get(baseUrl)
-                .then(response => postComments.value = response.data)
-                .then(() => postComments.value = postComments.value.sort((a, b) => +b.order - +a.order))
-        } catch (e) {
-            console.log(e.message);
-        }
-    }
-
-    //PUT Fetches
     const viewPost = async () => {
-        const baseUrl = new URL(`${baseUrls[0].url}posts/${selectedPost.value?.id}`);
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records/${selectedPost.value?.id}`);
 
         try {
-            await put(baseUrl, {
+            await patch(baseUrl, {
                 views: +selectedPost.value?.views + 1
             })
                 .then(() => selectedPost.value = { ...selectedPost.value, views: +selectedPost.value?.views + 1 });
@@ -88,7 +78,7 @@ export const useStore = defineStore("store", () => {
     }
 
     const likePost = async () => {
-        const baseUrl = new URL(`${baseUrls[0].url}posts/${selectedPost.value?.id}`);
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records/${selectedPost.value?.id}`);
 
         let tempID = localStorage.getItem("tempID");
 
@@ -108,64 +98,75 @@ export const useStore = defineStore("store", () => {
         selectedPost.value = { ...selectedPost.value, likes: likes }
 
         try {
-            await put(baseUrl, {
+            await patch(baseUrl, {
                 likes: likes
             })
-            //.then(() => selectedPost.value = { ...selectedPost.value, likes: likes });
 
         } catch (e) {
             console.log(e.message);
         }
     }
 
-    const editComment = async (postId, commentId, thisComment) => {
-        const baseUrl = `${baseUrls[0].url}posts/${postId}/comments/${commentId}`;
+    //Comments
+    const getPostComments = async (post) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/comments/records`);
+        baseUrl.searchParams.append("filter", "postId = " + "" + '"' + post?.id + '"' + "");
+        baseUrl.searchParams.append("sort", "-created");
 
         try {
-            await put(baseUrl, thisComment)
-            .then(() => {
-                postComments.value.filter(comment => {
-                    if (comment.id === commentId) {
-                        comment.message = thisComment.message;
-                    }
-                });
-                postComments.value = postComments.value.sort((a, b) => +b.order - +a.order);
-            })
+            await get(baseUrl)
+                .then(response => postComments.value = response.data?.items)
+
         } catch (e) {
             console.log(e.message);
         }
     }
 
-
-    //POST Fetches
-    const postComment = async (postId, newComment) => {
-        const baseUrl = `${baseUrls[0].url}posts/${postId}/comments`;
+    const postComment = async (newComment) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/comments/records`);
 
         try {
             await post(baseUrl, newComment)
-            .then(() => {
-                postComments.value = [...postComments.value, newComment];
-                postComments.value = postComments.value.sort((a, b) => +b.id - +a.id);
+            .then((res) => {
+                postComments.value = postComments.value.reverse();
+                postComments.value = [...postComments.value, res.data];
+                postComments.value = postComments.value.reverse();
             })
         } catch (e) {
             console.log(e.message);
         }
     }
 
-    //DELETE Fetches
-    const deleteComment = async (postId, commentId) => {
-        const baseUrl = `${baseUrls[0].url}posts/${postId}/comments/${commentId}`;
+    const deleteComment = async (thisComment) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/comments/records/${thisComment?.id}`);
 
         try {
             await remove(baseUrl)
             .then(() => {
-                postComments.value = postComments.value.filter(comment => comment.id !== commentId);
-                postComments.value = postComments.value.sort((a, b) => +b.id - +a.id);
+                postComments.value = postComments.value.filter(comment => comment.id !== thisComment?.id);
+
             })
         } catch (e) {
             console.log(e.message);
         }
     }
 
-    return { navMenu, carousel, latestArticles, selectedPost, postComments, selectedComment, getNavMenu, getCarousel, getLatestArticles, getPost, getPostComments, viewPost, likePost, postComment, deleteComment, editComment };
+    const editComment = async (thisComment) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/comments/records/${thisComment?.id}`);
+
+        try {
+            await patch(baseUrl, thisComment)
+            .then(() => {
+                postComments.value.filter(comment => {
+                    if (comment.id === thisComment?.id) {
+                        comment.message = thisComment.message;
+                    }
+                });
+            })
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    return { searchBoxVisible, navMenu, carousel, latestArticles, selectedPost, postComments, selectedComment, getNavMenu, getCarousel, getLatestArticles, getPost, getPostComments, viewPost, likePost, postComment, deleteComment, editComment };
 })

@@ -16,7 +16,7 @@
 import { useStore } from '~/store';
 
 const props = defineProps({
-    id: String
+    post: Object
 })
 
 const store = useStore();
@@ -25,7 +25,7 @@ const { getPostComments, deleteComment } = store;
 
 onMounted(() => {
     postComments.value = [];
-    getPostComments(props.id);
+    getPostComments(props.post);
 })
 
 const selectComment = (comment) => {
