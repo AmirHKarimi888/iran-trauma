@@ -8,10 +8,9 @@
                     <img class="w-[60px]" src="/logo.png" alt="logo">
                 </NuxtLink>
                 <NuxtLink to="/">
-                    <div class="font-bold text-sm text-blue-700 dark:text-white">آسیب‌ یار</div>
-                    <div class="text-sm max-sm:text-[0.5rem] text-yellow-700 dark:text-zinc-400 max-sm:leading-3">مرجع اطلاع رسانی،
-                        آموزش، <br class="sm:hidden">پیشگیری و ایمنی در
-                        مقابل تروما</div>
+                    <div class="font-bold text-sm text-blue-900 dark:text-white">ماوای ایمنی</div>
+                    <div class="text-sm max-sm:text-[0.5rem] text-yellow-700 dark:text-zinc-400 leading-6 max-sm:leading-5">مرجع اطلاع رسانی
+                        و آموزش ایمنی</div>
                 </NuxtLink>
             </div>
 

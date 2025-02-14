@@ -47,10 +47,10 @@ onMounted(() => {
 })
 
 useHead({
-  title: "آسیب یار",
+  title: "ماوای ایمنی",
   meta: [
-    { name: "آسیب یار", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
-    { name: "Iranian Trauma Society", content: "" }
+    { name: "ماوای ایمنی", content: "مرجع اطلاع رسانی و آموزش ایمنی" },
+    { name: "Mava Safety", content: "Educational Initiative On Trauma Prevention" }
   ]
 })
 </script>

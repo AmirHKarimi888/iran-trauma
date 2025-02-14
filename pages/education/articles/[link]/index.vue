@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Page />
-  </div>
+    <div>
+        <CategoryPage />
+    </div>
 </template>
 
 <script setup>

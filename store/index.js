@@ -11,6 +11,9 @@ export const useStore = defineStore("store", () => {
     const carousel = ref([]);
 
     const latestArticles = ref([]);
+    const posts = ref([]);
+
+    const selectedPage = ref("");
 
     const selectedPost = ref("");
     const postComments = ref([]);
@@ -38,15 +41,42 @@ export const useStore = defineStore("store", () => {
         }
     }
 
+    //Page
+    const getPage = async (categoryName) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/categoryPages/records`);
+        baseUrl.searchParams.append("filter", "pageRoute = " + "" + '"' + categoryName + '"' + "" + " && " + "" + "showPage = " + "" + true + "");
+
+        try {
+            await get(baseUrl)
+                .then(response => selectedPage.value = response.data?.items[0])
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
     //Posts
     const getLatestArticles = async () => {
         const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records`);
         baseUrl.searchParams.append("sort", "-created");
-        baseUrl.searchParams.append("sort", "showPost = " + "" + true + "");
+        baseUrl.searchParams.append("filter", "showPost = " + "" + true + "");
 
         try {
             await get(baseUrl)
                 .then(response => latestArticles.value = response.data?.items)
+                
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    const getPosts = async (category) => {
+        const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records`);
+        baseUrl.searchParams.append("sort", "-created");
+        baseUrl.searchParams.append("filter", "showPost = " + "" + true + "" + " && " + "" + "category = " + "" + '"' + category + '"' + "");
+
+        try {
+            await get(baseUrl)
+                .then(response => posts.value = response.data?.items)
                 
         } catch (e) {
             console.log(e.message);
@@ -168,5 +198,5 @@ export const useStore = defineStore("store", () => {
         }
     }
 
-    return { searchBoxVisible, navMenu, carousel, latestArticles, selectedPost, postComments, selectedComment, getNavMenu, getCarousel, getLatestArticles, getPost, getPostComments, viewPost, likePost, postComment, deleteComment, editComment };
+    return { searchBoxVisible, navMenu, carousel, posts, latestArticles, selectedPage, selectedPost, postComments, selectedComment, getNavMenu, getCarousel, getPosts, getLatestArticles, getPage, getPost, getPostComments, viewPost, likePost, postComment, deleteComment, editComment };
 })
