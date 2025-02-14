@@ -19,3 +19,7 @@ body {
 .router-link-exact-active {
     @apply text-yellow-400
 }
+
+.p-paginator {
+    @apply dark:bg-zinc-700;
+}
