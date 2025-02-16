@@ -1,5 +1,5 @@
 <template>
-    <div class="footer mt-12">
+    <div class="footer">
         <ul
             class="footer-nav-menu w-full p-3 bg-blue-900 dark:bg-zinc-800 text-white flex gap-x-5 max-sm:gap-x-3 justify-start items-center pr-16 max-sm:pr-3 text-sm max-sm:text-[0.6rem] overflow-x-auto z-50">
             <li class="cursor-pointer" v-for="item in navMenu" :key="item.id">

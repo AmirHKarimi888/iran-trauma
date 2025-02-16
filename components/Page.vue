@@ -2,8 +2,8 @@
     <div>
         <LoaderView v-if="!selectedPost?.id"
             class="loader lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto mt-[330px] p-20" />
-        <div v-else class="w-full pt-[200px]">
-            <div class="mx-auto w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6"
+        <div v-else class="w-full min-h-screen pt-[169px] pb-[30px] max-sm:pt-[139px] max-sm:pb-0 grid items-center">
+            <div class="mx-auto lg:w-[50%] md:w-[70%] sm:w-[80%] max-sm:w-[100%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 dark:max-sm:bg-zinc-700 shadow-md dark:max-sm:shadow-none p-5 text-sm leading-6"
                 style="direction: rtl;">
                 <div
                     class="post-header text-xs text-zinc-700 dark:text-white flex flex-col gap-3 border-b border-zinc-300 dark:border-zinc-500 pb-3">
@@ -80,7 +80,7 @@
 
 <script setup>
 import { useStore } from '~/store';
-import { useFormatDate } from '#build/imports'; 
+import { useFormatDate } from '#build/imports';
 import ShareView from '~/components/ShareView.vue';
 import baseUrls from '~/server/useApi/baseUrls';
 
@@ -115,6 +115,7 @@ onMounted(() => {
             })
         })
 })
+
 
 </script>
 

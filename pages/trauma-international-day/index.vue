@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full min-h-screen">
+  <div class="w-full min-h-screen pt-[169px] pb-[30px] max-sm:pt-[139px] max-sm:pb-0 grid items-center">
     <div
-      class="mx-auto mt-[200px] w-[60%] max-sm:w-[90%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 shadow-md p-5 text-sm leading-6"
+      class="mx-auto lg:w-[50%] md:w-[70%] sm:w-[80%] max-sm:w-[100%] border dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 dark:max-sm:bg-zinc-700 shadow-md dark:max-sm:shadow-none p-5 text-sm leading-6"
       style="direction: rtl;">
       <div class="text-lg" style="direction: rtl;">
         روز جهانی تروما

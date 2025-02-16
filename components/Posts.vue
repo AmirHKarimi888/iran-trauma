@@ -1,10 +1,10 @@
 <template>
-  <div class="lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto"
+  <div class="lg:w-[60%] md:w-[80%] sm:w-[90%] max-sm:w-[90%] grid justify-center mx-auto mt-3"
     style="direction: rtl;">
-    <div class="mt-8 mb-5 mr-2 text-lg" style="direction: rtl;">
+    <div class="mb-3 mr-2 text-lg" style="direction: rtl;">
       {{ title }}
     </div>
-    <ul class="grid max-sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-5">
+    <ul class="grid max-sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-2">
       <li v-for="post in posts" :key="post?.id" :class="post?.showPost ? 'border border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-zinc-800 shadow-md dark:shadow-none p-2' : 'hidden'">
         <Post :post="post"  v-if="post?.showPost"/>
       </li>

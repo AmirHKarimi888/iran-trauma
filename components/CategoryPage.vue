@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="pt-[139px] grid items-center">
         <div>
             <div v-if="posts.length > 0">
-                <Posts :title="selectedPage?.pageTitle" :posts="posts" class="pt-[180px]" />
-                <Pagination :posts="posts" class="pt-10" />
+                <Posts :title="selectedPage?.pageTitle" :posts="posts" />
+                <Pagination :posts="posts" class="pt-3" />
             </div>
             <div v-else class="w-full h-screen grid justify-center items-center">
                 <div v-if="!pending" class="text-lg">
