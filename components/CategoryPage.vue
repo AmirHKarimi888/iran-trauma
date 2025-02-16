@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-[139px] grid items-center">
+    <div class="pt-[139px] w-full h-screen grid items-center">
         <div>
             <div v-if="posts.length > 0">
                 <Posts :title="selectedPage?.pageTitle" :posts="posts" />

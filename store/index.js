@@ -59,6 +59,8 @@ export const useStore = defineStore("store", () => {
         const baseUrl = new URL(`${baseUrls[0].url}api/collections/posts/records`);
         baseUrl.searchParams.append("sort", "-created");
         baseUrl.searchParams.append("filter", "showPost = " + "" + true + "");
+        baseUrl.searchParams.append("page", 1);
+        baseUrl.searchParams.append("perPage", 6);
 
         try {
             await get(baseUrl)
