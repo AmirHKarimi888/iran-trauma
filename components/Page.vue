@@ -110,7 +110,7 @@ onMounted(() => {
                 title: `${selectedPost.value?.title}`,
                 meta: [
                     { name: `${selectedPost.value?.title}`, content: `${selectedPost.value?.descr}` },
-                    { name: "آسیب یار", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
+                    { name: "ماوای ایمنی", content: "مرجع اطلاع رسانی، آموزش و پیشگیری از تروما و حوادث" },
                 ]
             })
         })
